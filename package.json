@@ -2,7 +2,10 @@
   "name": "garradragon",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
+    "start":"node src/index.js",
+    "dev":"node --watch src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -14,5 +17,8 @@
     "express": "^4.21.2",
     "json-server": "^1.0.0-beta.3",
     "uuid": "^11.0.3"
+  },
+  "devDependencies": {
+    "morgan": "^1.10.0"
   }
 }

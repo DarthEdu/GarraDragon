@@ -1,7 +1,7 @@
 // Requerir los módulos
 import express from 'express'
 import morgan from 'morgan'
-
+import aportanteRouter from './routers/aportantes_routes.js'
 
 // Inicializaciones
 const app = express()

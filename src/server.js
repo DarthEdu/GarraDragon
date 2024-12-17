@@ -1,21 +1,19 @@
 // Requerir los módulos
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
-import aportanteRouter from "./routers/aportantes_routes.js";
+import express from 'express'
+import morgan from 'morgan'
+
 
 // Inicializaciones
-const app = express();
-dotenv.config();
+const app = express()
+app.use(morgan('dev'))
 
-// Configuraciones
-app.set("port", process.env.port || 5000);
-app.use(cors());
 
-// Middlewares
-app.use(express.json());
+// Variables
+app.set('port',process.env.port || 3000)
 
-// Variables globales
+
+// Middlewares 
+app.use(express.json())
 
 // Rutas
 app.get("/", (req, res) => {

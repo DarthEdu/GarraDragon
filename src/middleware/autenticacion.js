@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import Aportante from "../models/aportante.js";
+import Tesorero from "../models/tesorero.js";
 
 const verificarAutenticacion = async (req, res, next) => {
   if (!req.headers.authorization)
@@ -17,6 +18,10 @@ const verificarAutenticacion = async (req, res, next) => {
         .lean()
         .select("-password");
       next();
+    }
+    else{
+      req.tesoreroBDD = await Tesorero.findById(id).lean().select("-password")
+      next()
     }
   } catch (error) {
     const e = new Error("Formato del token no válido");

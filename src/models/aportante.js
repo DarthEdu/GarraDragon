@@ -19,11 +19,6 @@ const aportanteSchema = new Schema(
       trim: true,
       unique: true,
     },
-    matricula: {
-      type: String,
-      required: true,
-      unique: true,
-    },
     telefono: {
       type: Number,
       trim: true,

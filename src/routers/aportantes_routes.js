@@ -17,8 +17,10 @@ import {
 
 import verificarAutenticacion from "../middleware/autenticacion.js";
 
+import { validacionAportante } from '../middlewares/validacionAportante.js';
+
 router.post("/login", login);
-router.post("/registro", registro);
+router.post("/registro",validacionAportante, registro);
 router.get("/confirmar/:token", confirmEmail);
 router.get("/aportantes", listarAportantes);
 router.post("/recuperar-password", recuperarPassword);

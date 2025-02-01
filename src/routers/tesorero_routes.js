@@ -1,12 +1,42 @@
-import {Router} from 'express'
-const router = Router()
+// Importar Router de Express
+import { Router } from "express";
+// Crear una instancia de Router()
+const router = Router();
+// Importar los métodos del controlador
+import {
+  login,
+  perfil,
+  registro,
+  confirmEmail,
+  listarTesoreros,
+  detalleTesorero,
+  actualizarPerfil,
+  actualizarPassword,
+  recuperarPassword,
+  comprobarTokenPasword,
+  nuevoPassword,
+} from "../controllers/tesorero_controller.js";
+import verificarAutenticacion from "../middlewares/autenticacion.js";
+import { validacionTesorero } from "../middlewares/validacionTesorero.js";
 
-router.post('/tesorero/login',(req,res)=>res.send("Login del tesorero"))
-router.get('/tesorero/perfil',(req,res)=>res.send("Perfil del tesorero"))
-router.get('/aportantes',(req,res)=>res.send("Listar aportantes"))
-router.get('/aportante/:id',(req,res)=>res.send("Detalle del aportante"))
-router.post('/productos/registro',(req,res)=>res.send("Registrar productos"))
-router.put('/producto/actualizar/:id',(req,res)=>res.send("Actualizar producto"))
-router.delete('/producto/eliminar/:id',(req,res)=>res.send("Eliminar producto"))
+// Rutas publicas
+router.post("/login", login);
+router.post("/registro", registro);
+router.get("/confirmar/:token", confirmEmail);
+router.get("/tesoreros", listarTesoreros);
+router.post("/recuperar-password", recuperarPassword);
+router.get("/recuperar-password/:token", comprobarTokenPasword);
+router.post("/nuevo-password/:token", nuevoPassword);
 
-export default router
+// Rutas privadas
+router.get("/perfil", verificarAutenticacion, perfil);
+router.put(
+  "/tesorero/actualizarpassword",
+  verificarAutenticacion,
+  actualizarPassword
+);
+router.get("/tesorero/:id", verificarAutenticacion, detalleTesorero);
+router.put("/tesorero/:id", verificarAutenticacion, actualizarPerfil);
+
+// Exportar la variable router
+export default router;

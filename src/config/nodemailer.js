@@ -17,13 +17,15 @@ const sendMailToUser = (userMail, token) => {
     from: process.env.USER_MAILTRAP,
     to: userMail,
     subject: "Verifica tu cuenta",
-    html: `<p>Hola, haz clic <a href="${
-      process.env.URL_BACKEND
-    }confirmar/${encodeURIComponent(
+    html: `
+      <h1>Sistema de gestión de Aportaciones (GARRA-DRAGON 🐲 💖)</h1>
+      <hr>
+      <a href=${process.env.URL_FRONTEND}confirmar/${encodeURIComponent(
       token
-    )}">aquí</a> para confirmar tu cuenta.</p>`,
+    )}> Click aquí para confirmar tu cuenta.</a>
+      <footer>Dragon te da la Bienvenida!</footer>
+      `,
   };
-
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       console.log(error);
@@ -36,7 +38,7 @@ const sendMailToUser = (userMail, token) => {
 // send mail with defined transport object
 const sendMailToRecoveryPassword = async (userMail, token) => {
   let info = await transporter.sendMail({
-    from: "admin@vet.com",
+    from: "admin@garra.com",
     to: userMail,
     subject: "Correo para reestablecer tu contraseña",
     html: `
@@ -44,10 +46,28 @@ const sendMailToRecoveryPassword = async (userMail, token) => {
     <hr>
     <a href=${process.env.URL_BACKEND}recuperar-password/${token}>Clic para reestablecer tu contraseña</a>
     <hr>
-    <footer>Grandote te da la Bienvenida!</footer>
+    <footer>Dragon te da la Bienvenida!</footer>
     `,
   });
   console.log("Mensaje enviado satisfactoriamente: ", info.messageId);
 };
 
-export { sendMailToUser, sendMailToRecoveryPassword };
+// send mail to patient
+const sendMailToAportante = async (userMail, password) => {
+  let info = await transporter.sendMail({
+    from: "admin@garra.com",
+    to: userMail,
+    subject: "Correo de bienvenida",
+    html: `
+  <h1>Sistema de gestión de Aportaciones (GARRA-DRAGON 🐲 💖)</h1>
+  <hr>
+  <p>Contraseña de acceso: ${password}</p>
+  <a href=${process.env.URL_BACKEND}aportante/login>Clic para iniciar sesión</a>
+  <hr>
+  <footer>Dragon te da la Bienvenida!</footer>
+  `,
+  });
+  console.log("Mensaje enviado satisfactoriamente: ", info.messageId);
+};
+
+export { sendMailToUser, sendMailToRecoveryPassword, sendMailToAportante };

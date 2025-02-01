@@ -1,8 +1,10 @@
-import app from './server.js'
-import connection from './database.js';
+import app from "./server.js";
+import connection from "./database.js";
+import dotenv from "dotenv";
 
-connection()
+dotenv.config();
+connection();
 
-app.listen(app.get('port'),()=>{
-    console.log(`Server ok on http://localhost:${app.get('port')}`);
-})
+app.listen(app.get("port"), () => {
+  console.log(`Server ok on http://localhost:${app.get("port")}`);
+});

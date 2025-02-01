@@ -2,38 +2,31 @@ import { Router } from "express";
 const router = Router();
 
 import {
-  login,
-  perfil,
-  registro,
-  confirmEmail,
-  actualizarPerfil,
-  actualizarPassword,
-  recuperarPassword,
-  comprobarTokenPasword,
-  nuevoPassword,
-  listarAportantes,
+  actualizarAportante,
   detalleAportante,
+  eliminarAportante,
+  listarAportantes,
+  registrarAportante,
+  loginAportante,
+  perfilAportante,
 } from "../controllers/aportante_controller.js";
 
-import verificarAutenticacion from "../middleware/autenticacion.js";
+import verificarAutenticacion from "../middlewares/autenticacion.js";
 
-import { validacionAportante } from '../middlewares/validacionAportante.js';
-
-router.post("/login", login);
-router.post("/registro",validacionAportante, registro);
-router.get("/confirmar/:token", confirmEmail);
-router.get("/aportantes", listarAportantes);
-router.post("/recuperar-password", recuperarPassword);
-router.get("/recuperar-password/:token", comprobarTokenPasword);
-router.post("/nuevo-password/:token", nuevoPassword);
-
-router.get("/perfil", verificarAutenticacion, perfil);
-router.put(
-  "/aportante/actualizarpassword",
-  verificarAutenticacion,
-  actualizarPassword
-);
+router.post("/aportante/login", loginAportante);
+router.get("/aportante/perfil", verificarAutenticacion, perfilAportante);
+router.get("/aportantes", verificarAutenticacion, listarAportantes);
 router.get("/aportante/:id", verificarAutenticacion, detalleAportante);
-router.put("/aportante/:id", verificarAutenticacion, actualizarPerfil);
+router.post("/aportante/registro", verificarAutenticacion, registrarAportante);
+router.put(
+  "/aportante/actualizar/:id",
+  verificarAutenticacion,
+  actualizarAportante
+);
+router.delete(
+  "/aportante/eliminar/:id",
+  verificarAutenticacion,
+  eliminarAportante
+);
 
 export default router;

@@ -5,64 +5,59 @@ const aportanteSchema = new Schema(
   {
     nombre: {
       type: String,
-      required: true,
+      require: true,
       trim: true,
     },
     apellido: {
       type: String,
-      required: true,
+      require: true,
       trim: true,
     },
     email: {
       type: String,
-      required: true,
+      require: true,
       trim: true,
-      unique: true,
     },
-    telefono: {
-      type: Number,
-      trim: true,
-      default: null,
-    },
-
     password: {
       type: String,
       require: true,
     },
-
-    status: {
+    celular: {
+      type: String,
+      require: true,
+      trim: true,
+    },
+    reserva: {
+      type: Date,
+      require: true,
+      trim: true,
+      default: Date.now(),
+    },
+    entrega: {
+      type: Date,
+      require: true,
+      trim: true,
+      default: Date.now(),
+    },
+    estado: {
       type: Boolean,
       default: true,
     },
-
-    token: {
+    encargado: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "tesorero",
+    },
+    rol: {
       type: String,
-      default: null,
+      default: "aportante",
     },
-
-    confirmEmail: {
-      type: Boolean,
-      default: false,
-    },
-
-    estadoAportacion: {
-      type: String,
-      enum: ["Al día", "En deuda", "Pendiente"],
-      default: "Pendiente",
-    },
-    aportaciones: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Aportacion",
-      },
-    ],
   },
   {
     timestamps: true,
   }
 );
 
-// Método para cifrar el password del aportante
+// Método para cifrar el password del paciente
 aportanteSchema.methods.encrypPassword = async function (password) {
   const salt = await bcrypt.genSalt(10);
   const passwordEncryp = await bcrypt.hash(password, salt);
@@ -73,12 +68,6 @@ aportanteSchema.methods.encrypPassword = async function (password) {
 aportanteSchema.methods.matchPassword = async function (password) {
   const response = await bcrypt.compare(password, this.password);
   return response;
-};
-
-// Método para crear un token
-aportanteSchema.methods.crearToken = function () {
-  const tokenGenerado = (this.token = Math.random().toString(36).slice(2));
-  return tokenGenerado;
 };
 
 export default model("Aportante", aportanteSchema);

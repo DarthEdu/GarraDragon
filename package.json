@@ -2,6 +2,9 @@
   "name": "garradragon",
   "version": "1.0.0",
   "main": "index.js",
+  "engines": {
+    "node": "^12.22.0 || ^14.17.0 || >=16.0.0"
+  },
   "type": "module",
   "scripts": {
     "start": "node src/index.js",

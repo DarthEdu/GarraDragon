@@ -3,7 +3,7 @@ import {
   sendMailToUser,
   sendMailToRecoveryPassword,
 } from "../config/nodemailer.js";
-import generarJWT from "../helpers/crearJWT.js";
+import generarJWT from "../helpers/createJWT.js";
 import Tesorero from "../models/tesorero.js";
 import mongoose from "mongoose";
 
@@ -39,7 +39,7 @@ const login = async (req, res) => {
 
   const token = generarJWT(tesoreroBDD._id, "tesorero");
 
-  const { nombre, apellido, telefono, _id } = tesoreroBDD;
+  const { nombre, apellido, celular, _id } = tesoreroBDD;
 
   res.status(200).json({
     token,
@@ -114,12 +114,12 @@ const confirmEmail = async (req, res) => {
   res.status(200).json({ msg: "Token confirmado, ya puedes iniciar sesión" });
 };
 
-// Método para listar veterinarios
+// Método para listar tesoreros
 const listarTesoreros = (req, res) => {
   res.status(200).json({ res: "lista de tesoreros registrados" });
 };
 
-// Método para mostrar el detalle de un veterinario en particular
+// Método para mostrar el detalle de un tesorero en particular
 const detalleTesorero = async (req, res) => {
   const { id } = req.params;
   const tesoreroBDD = await Tesorero.findById(id);

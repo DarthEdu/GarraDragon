@@ -4,7 +4,7 @@ import Aportacion from "../models/aportaciones.js";
 // IMPORTAR EL MÉTODO sendMailToPaciente
 import { sendMailToAportante } from "../config/nodemailer.js";
 import mongoose from "mongoose";
-import generarJWT from "../helpers/crearJWT.js";
+import generarJWT from "../helpers/createJWT.js";
 
 // Método para el proceso de login
 const loginAportante = async (req, res) => {
@@ -58,18 +58,18 @@ const perfilAportante = (req, res) => {
 
 // Método para listar todos los aportantes
 const listarAportantes = async (req, res) => {
-  if (req.aportanteBDD in req.aportanteBDD) {
+  if (req.aportanteBDD && "celular" in req.aportanteBDD) {
     const aportantes = await Aportante.find(req.aportanteBDD._id)
       .select("-entrega -createdAt -updatedAt -__v")
-      .populate("encargado", "_id nombre apellido");
+      .populate('encargado', '_id nombre apellido');
     res.status(200).json(aportantes);
   } else {
     const aportantes = await Aportante.find({ estado: true })
-      .where("encargado")
+      .where('encargado')
       .equals(req.tesoreroBDD)
       .select("-entrega -createdAt -updatedAt -__v")
-      .populate("encargado", "_id nombre apellido");
-    res.status(200).json(pacientes);
+      .populate('encargado', '_id nombre apellido');
+    res.status(200).json(aportantes);
   }
 };
 

@@ -16,8 +16,7 @@ import {
   comprobarTokenPasword,
   nuevoPassword,
 } from "../controllers/tesorero_controller.js";
-import verificarAutenticacion from "../middlewares/autenticacion.js";
-import { validacionTesorero } from "../middlewares/validacionTesorero.js";
+import verificarAutenticacion from "../middleware/autenticacion.js";
 
 // Rutas publicas
 router.post("/login", login);
@@ -31,7 +30,7 @@ router.post("/nuevo-password/:token", nuevoPassword);
 // Rutas privadas
 router.get("/perfil", verificarAutenticacion, perfil);
 router.put(
-  "/tesorero/actualizarpassword",
+  "/tesorero/actualizar-password",
   verificarAutenticacion,
   actualizarPassword
 );

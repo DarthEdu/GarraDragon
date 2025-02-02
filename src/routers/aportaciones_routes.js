@@ -8,8 +8,7 @@ import {
   eliminarAportacion,
   cambiarEstado,
 } from "../controllers/aportacion_controller.js";
-
-import verificarAutenticacion from "../middlewares/autenticacion.js";
+import verificarAutenticacion from "../middleware/autenticacion.js";
 
 // Ruta para crear el plan de aportacion
 router.post(

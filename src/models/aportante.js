@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 import bcrypt from "bcryptjs";
 
 const aportanteSchema = new Schema(
@@ -45,7 +45,11 @@ const aportanteSchema = new Schema(
     },
     encargado: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "tesorero",
+      ref: "Tesorero",
+    },
+    plan: {
+      type: String,
+      default: true,
     },
     rol: {
       type: String,

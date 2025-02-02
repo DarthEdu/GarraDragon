@@ -10,8 +10,7 @@ import {
   loginAportante,
   perfilAportante,
 } from "../controllers/aportante_controller.js";
-
-import verificarAutenticacion from "../middlewares/autenticacion.js";
+import verificarAutenticacion from "../middleware/autenticacion.js";
 
 router.post("/aportante/login", loginAportante);
 router.get("/aportante/perfil", verificarAutenticacion, perfilAportante);

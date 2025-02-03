@@ -20,7 +20,7 @@ const sendMailToUser = (userMail, token) => {
     html: `
       <h1>Sistema de gestión de Aportaciones (GARRA-DRAGON 🐲 💖)</h1>
       <hr>
-      <a href=${process.env.URL_FRONTEND}confirmar/${encodeURIComponent(
+      <a href=${process.env.URL_BACKEND}confirmar/${encodeURIComponent(
       token
     )}> Click aquí para confirmar tu cuenta.</a>
       <footer>Dragon te da la Bienvenida!</footer>

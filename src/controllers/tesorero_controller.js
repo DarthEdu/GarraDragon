@@ -5,6 +5,7 @@ import {
 } from "../config/nodemailer.js";
 import generarJWT from "../helpers/createJWT.js";
 import Tesorero from "../models/tesorero.js";
+import Invitacion from "../models/invitacion.js";
 import mongoose from "mongoose";
 
 // Método para el login
@@ -65,12 +66,28 @@ const perfil = (req, res) => {
 // Método para el registro
 const registro = async (req, res) => {
   // Desestructurar los campos
-  const { email, password } = req.body;
-  // Validar todos los campos llenos
+  const { email, password, codigoInvitacion } = req.body;
+  // Validar todos los campos lleno
   if (Object.values(req.body).includes(""))
     return res
       .status(400)
       .json({ msg: "Lo sentimos, debes llenar todos los campos" });
+
+  if (!codigoInvitacion)
+    return res
+      .status(400)
+      .json({ msg: "Lo sentimos, necesitas un código de invitación" });
+
+  const invitacion = await Invitacion.findOne({ codigo: codigoInvitacion });
+  if (!invitacion)
+    return res.status(400).json({ msg: "Código de invitación no válido" });
+
+  if (invitacion.usado)
+    return res.status(400).json({ msg: "Este código ya ha sido utilizado" });
+
+  if (new Date() > invitacion.expiresAt)
+    return res.status(400).json({ msg: "El código ha expirado" });
+
   // Obtener el usuario de la BDD en base al email
   const verificarEmailBDD = await Tesorero.findOne({ email });
   // Validar que el email sea nuevo
@@ -89,6 +106,10 @@ const registro = async (req, res) => {
   await sendMailToUser(email, token);
   // Guaradar en BDD
   await nuevoTesorero.save();
+
+  // Marcar código como usado
+  await Invitacion.findByIdAndUpdate(invitacion._id, { usado: true });
+
   // Imprimir el mensaje
   res
     .status(200)

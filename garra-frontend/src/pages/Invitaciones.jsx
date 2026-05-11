@@ -45,7 +45,7 @@ const Invitaciones = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-gray-500">Cargando...</div>
+        <div className="text-[#4A4A4A]">Cargando...</div>
       </div>
     );
   }
@@ -53,73 +53,78 @@ const Invitaciones = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Invitaciones</h1>
+        <div>
+          <h1 className="text-2xl font-bold text-[#1A1A1A]">Invitaciones</h1>
+          <p className="text-[#4A4A4A] text-sm">Gestión de códigos de invitación</p>
+        </div>
         <button
           onClick={handleGenerar}
           disabled={generando}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
+          className="px-5 py-2.5 bg-[#722F37] text-white font-medium rounded-xl hover:bg-[#5a252c] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
         >
-          {generando ? 'Generando...' : 'Generar Código'}
+          {generando ? 'Generando...' : '+ Generar Código'}
         </button>
       </div>
 
       {nuevoCodigo && (
-        <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-          <div className="text-sm text-green-600 mb-1">Nuevo código generado:</div>
-          <div className="text-2xl font-bold text-green-700">
+        <div className="mb-6 p-5 bg-white border-2 border-[#722F37] rounded-2xl">
+          <div className="text-sm font-medium text-[#722F37] mb-2">Nuevo código generado:</div>
+          <div className="text-3xl font-bold text-[#1A1A1A] tracking-wider">
             {nuevoCodigo.codigo}
           </div>
-          <div className="text-sm text-green-600 mt-1">
+          <div className="text-sm text-[#4A4A4A] mt-2">
             Expira: {formatDate(nuevoCodigo.expiresAt)}
           </div>
           <button
             onClick={() => setNuevoCodigo(null)}
-            className="mt-2 text-sm text-green-700 hover:underline"
+            className="mt-3 text-sm text-[#722F37] font-medium hover:underline"
           >
             Ocultar
           </button>
         </div>
       )}
 
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+      <div className="bg-white rounded-2xl shadow-sm border border-[#E5E5E5] overflow-hidden">
+        <table className="min-w-full">
+          <thead className="bg-[#F5F5F5]">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+              <th className="px-6 py-4 text-left text-xs font-semibold text-[#4A4A4A] uppercase tracking-wider">
                 Código
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+              <th className="px-6 py-4 text-left text-xs font-semibold text-[#4A4A4A] uppercase tracking-wider">
                 Estado
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+              <th className="px-6 py-4 text-left text-xs font-semibold text-[#4A4A4A] uppercase tracking-wider">
                 Expira
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+              <th className="px-6 py-4 text-left text-xs font-semibold text-[#4A4A4A] uppercase tracking-wider">
                 Creado
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
-            {invitaciones.map((inv) => (
-              <tr key={inv._id}>
-                <td className="px-6 py-4 whitespace-nowrap font-mono">
-                  {inv.codigo}
+          <tbody className="divide-y divide-[#E5E5E5]">
+            {invitaciones.map((inv, index) => (
+              <tr key={inv._id} className={index % 2 === 0 ? 'bg-white' : 'bg-[#F5F5F5]/50'}>
+                <td className="px-6 py-4">
+                  <span className="font-mono font-medium text-[#1A1A1A] bg-[#F5F5F5] px-3 py-1 rounded-lg text-sm">
+                    {inv.codigo}
+                  </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="px-6 py-4">
                   <span
-                    className={`px-2 py-1 text-xs rounded-full ${
+                    className={`px-2.5 py-1 text-xs font-medium rounded-full ${
                       inv.usado
-                        ? 'bg-red-100 text-red-800'
-                        : 'bg-green-100 text-green-800'
+                        ? 'bg-red-100 text-red-700'
+                        : 'bg-green-100 text-green-700'
                     }`}
                   >
                     {inv.usado ? 'Usado' : 'Disponible'}
                   </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-6 py-4 text-sm text-[#4A4A4A]">
                   {formatDate(inv.expiresAt)}
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <td className="px-6 py-4 text-sm text-[#4A4A4A]">
                   {formatDate(inv.createdAt)}
                 </td>
               </tr>
@@ -127,7 +132,7 @@ const Invitaciones = () => {
           </tbody>
         </table>
         {invitaciones.length === 0 && (
-          <div className="p-8 text-center text-gray-500">
+          <div className="p-12 text-center text-[#4A4A4A]">
             No hay códigos de invitación
           </div>
         )}

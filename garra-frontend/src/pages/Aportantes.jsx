@@ -68,7 +68,7 @@ const Aportantes = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="text-gray-500">Cargando...</div>
+        <div className="text-[#4A4A4A]">Cargando...</div>
       </div>
     );
   }
@@ -76,74 +76,83 @@ const Aportantes = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Aportantes</h1>
+        <div>
+          <h1 className="text-2xl font-bold text-[#1A1A1A]">Aportantes</h1>
+          <p className="text-[#4A4A4A] text-sm">Gestión de aportantes</p>
+        </div>
         <button
           onClick={() => setShowModal(true)}
-          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+          className="px-5 py-2.5 bg-[#722F37] text-white font-medium rounded-xl hover:bg-[#5a252c] transition-all duration-200"
         >
-          Nuevo Aportante
+          + Nuevo Aportante
         </button>
       </div>
 
       {error && (
-        <div className="mb-4 p-3 bg-red-50 text-red-600 rounded-md text-sm">
+        <div className="mb-4 p-3 bg-red-50 text-[#722F37] rounded-xl text-sm border border-red-100">
           {error}
         </div>
       )}
       {success && (
-        <div className="mb-4 p-3 bg-green-50 text-green-600 rounded-md text-sm">
+        <div className="mb-4 p-3 bg-green-50 text-green-700 rounded-xl text-sm border border-green-100">
           {success}
         </div>
       )}
 
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+      <div className="bg-white rounded-2xl shadow-sm border border-[#E5E5E5] overflow-hidden">
+        <table className="min-w-full">
+          <thead className="bg-[#F5F5F5]">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+              <th className="px-6 py-4 text-left text-xs font-semibold text-[#4A4A4A] uppercase tracking-wider">
                 Nombre
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+              <th className="px-6 py-4 text-left text-xs font-semibold text-[#4A4A4A] uppercase tracking-wider">
                 Email
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+              <th className="px-6 py-4 text-left text-xs font-semibold text-[#4A4A4A] uppercase tracking-wider">
                 Celular
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+              <th className="px-6 py-4 text-left text-xs font-semibold text-[#4A4A4A] uppercase tracking-wider">
                 Plan
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+              <th className="px-6 py-4 text-left text-xs font-semibold text-[#4A4A4A] uppercase tracking-wider">
                 Estado
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+              <th className="px-6 py-4 text-left text-xs font-semibold text-[#4A4A4A] uppercase tracking-wider">
                 Acciones
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200">
-            {aportantes.map((aportante) => (
-              <tr key={aportante._id}>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  {aportante.nombre} {aportante.apellido}
+          <tbody className="divide-y divide-[#E5E5E5]">
+            {aportantes.map((aportante, index) => (
+              <tr key={aportante._id} className={index % 2 === 0 ? 'bg-white' : 'bg-[#F5F5F5]/50'}>
+                <td className="px-6 py-4">
+                  <span className="font-medium text-[#1A1A1A]">
+                    {aportante.nombre} {aportante.apellido}
+                  </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">{aportante.email}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{aportante.celular}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{aportante.plan}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="px-6 py-4 text-[#4A4A4A]">{aportante.email}</td>
+                <td className="px-6 py-4 text-[#4A4A4A]">{aportante.celular}</td>
+                <td className="px-6 py-4">
+                  <span className="px-2.5 py-1 text-xs font-medium bg-[#F5F5F5] text-[#4A4A4A] rounded-lg capitalize">
+                    {aportante.plan}
+                  </span>
+                </td>
+                <td className="px-6 py-4">
                   <span
-                    className={`px-2 py-1 text-xs rounded-full ${
-                     aportante.estado
-                        ? 'bg-green-100 text-green-800'
-                        : 'bg-red-100 text-red-800'
+                    className={`px-2.5 py-1 text-xs font-medium rounded-full ${
+                      aportante.estado
+                        ? 'bg-green-100 text-green-700'
+                        : 'bg-red-100 text-red-700'
                     }`}
                   >
                     {aportante.estado ? 'Activo' : 'Inactivo'}
                   </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="px-6 py-4">
                   <button
                     onClick={() => handleDelete(aportante._id)}
-                    className="text-red-600 hover:text-red-700 text-sm"
+                    className="text-[#722F37] hover:text-[#5a252c] text-sm font-medium transition-colors"
                   >
                     Dar de baja
                   </button>
@@ -153,20 +162,20 @@ const Aportantes = () => {
           </tbody>
         </table>
         {aportantes.length === 0 && (
-          <div className="p-8 text-center text-gray-500">
+          <div className="p-12 text-center text-[#4A4A4A]">
             No hay aportantes registrados
           </div>
         )}
       </div>
 
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg max-w-md w-full p-6">
-            <h2 className="text-xl font-bold mb-4">Nuevo Aportante</h2>
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl">
+            <h2 className="text-xl font-bold text-[#1A1A1A] mb-6">Nuevo Aportante</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-[#4A4A4A] mb-2">
                     Nombre
                   </label>
                   <input
@@ -175,12 +184,12 @@ const Aportantes = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, nombre: e.target.value })
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                    className="w-full px-4 py-3 bg-[#F5F5F5] border border-transparent rounded-xl focus:outline-none focus:border-[#722F37] focus:ring-2 focus:ring-[#722F37]/20 transition-all duration-200"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-medium text-[#4A4A4A] mb-2">
                     Apellido
                   </label>
                   <input
@@ -189,13 +198,13 @@ const Aportantes = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, apellido: e.target.value })
                     }
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                    className="w-full px-4 py-3 bg-[#F5F5F5] border border-transparent rounded-xl focus:outline-none focus:border-[#722F37] focus:ring-2 focus:ring-[#722F37]/20 transition-all duration-200"
                     required
                   />
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-[#4A4A4A] mb-2">
                   Email
                 </label>
                 <input
@@ -204,12 +213,12 @@ const Aportantes = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, email: e.target.value })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                  className="w-full px-4 py-3 bg-[#F5F5F5] border border-transparent rounded-xl focus:outline-none focus:border-[#722F37] focus:ring-2 focus:ring-[#722F37]/20 transition-all duration-200"
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-[#4A4A4A] mb-2">
                   Celular
                 </label>
                 <input
@@ -218,12 +227,12 @@ const Aportantes = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, celular: e.target.value })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                  className="w-full px-4 py-3 bg-[#F5F5F5] border border-transparent rounded-xl focus:outline-none focus:border-[#722F37] focus:ring-2 focus:ring-[#722F37]/20 transition-all duration-200"
                   required
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="block text-sm font-medium text-[#4A4A4A] mb-2">
                   Plan
                 </label>
                 <select
@@ -231,24 +240,24 @@ const Aportantes = () => {
                   onChange={(e) =>
                     setFormData({ ...formData, plan: e.target.value })
                   }
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md"
+                  className="w-full px-4 py-3 bg-[#F5F5F5] border border-transparent rounded-xl focus:outline-none focus:border-[#722F37] focus:ring-2 focus:ring-[#722F37]/20 transition-all duration-200"
                 >
                   <option value="mensual">Mensual</option>
                   <option value="trimestral">Trimestral</option>
                   <option value="anual">Anual</option>
                 </select>
               </div>
-              <div className="flex justify-end space-x-3 pt-4">
+              <div className="flex justify-end gap-3 pt-4">
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                  className="px-5 py-2.5 text-[#4A4A4A] hover:bg-[#F5F5F5] rounded-xl transition-all duration-200"
                 >
                   Cancelar
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                  className="px-5 py-2.5 bg-[#722F37] text-white font-medium rounded-xl hover:bg-[#5a252c] transition-all duration-200"
                 >
                   Crear
                 </button>
